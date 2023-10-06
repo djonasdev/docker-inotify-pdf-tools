@@ -1,0 +1,23 @@
+#!/bin/sh
+
+#Print some Debug
+set -xe
+
+RUN_USER="worker"
+
+#################################################
+# Add worker user with specific User & Group ID #
+#################################################
+addgroup -g $GID $RUN_USER
+adduser -D -s /bin/sh -g $GID -G $RUN_USER -h "/home/$RUN_USER" -u $UID $RUN_USER
+
+####################################
+#Fix mounted directory permissions #
+####################################
+chown -R $RUN_USER:$RUN_USER "/input"
+chown -R $RUN_USER:$RUN_USER "/output"
+
+##########################
+# Exec docker-run script #
+##########################
+exec su -c 'exec /bin/docker-run' $RUN_USER

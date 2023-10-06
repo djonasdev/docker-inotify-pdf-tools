@@ -1,0 +1,31 @@
+#!/bin/sh
+
+#Print some Debug
+set -xe
+
+INOTIFY_EVENTS_DEFAULT="create,move"
+INOTIFY_OPTONS_DEFAULT="--monitor --format %f"
+
+#
+# Display settings on standard out.
+#
+echo "inotify settings"
+echo "================"
+echo
+echo "  Volumes:          ${VOLUMES}"
+echo "  CMD:              ${CMD}"
+echo "  Inotify_Events:   ${INOTIFY_EVENTS:=${INOTIFY_EVENTS_DEFAULT}}"
+echo "  Inotify_Options:  ${INOTIFY_OPTONS:=${INOTIFY_OPTONS_DEFAULT}}"
+echo
+
+echo "[Starting inotifywait...]"
+cd /input/
+inotifywait -e ${INOTIFY_EVENTS} ${INOTIFY_OPTONS} "${VOLUMES}" | \
+    while read FILE;
+    do       
+        # workaround to use 'mv' while debugging 
+        if [[ -e "$FILE" ]]; then
+            echo "new file: $FILE"
+            eval "${CMD//####/$FILE}"
+        fi
+    done
