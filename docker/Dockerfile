@@ -45,6 +45,5 @@ VOLUME "/output"
 #   and then execute /bin/docker-run with user access to configure (if needed) and run         #
 #		Syncserver                                                                             #
 ################################################################################################
-RUN chmod u+x /bin/docker-run
 RUN chmod u+x /bin/docker-run-root
 CMD ["/bin/docker-run-root"]

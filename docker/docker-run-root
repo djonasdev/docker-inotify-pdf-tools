@@ -20,4 +20,5 @@ chown -R $RUN_USER:$RUN_USER "/output"
 ##########################
 # Exec docker-run script #
 ##########################
+chmod +x /bin/docker-run
 exec su -c 'exec /bin/docker-run' $RUN_USER
