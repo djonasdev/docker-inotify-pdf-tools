@@ -22,6 +22,7 @@ ENV CMD="pdfseparate #### /output/####-%d.pdf; rm ####"
 # But it looks much better with all work in script #
 ####################################################
 COPY build.sh /tmp/build.sh
+RUN chmod u+x /tmp/build.sh
 
 ###########################################################################
 # Execute our build script and delete it because we won't need it anymore #
