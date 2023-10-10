@@ -8,8 +8,9 @@ RUN_USER="worker"
 #################################################
 # Add worker user with specific User & Group ID #
 #################################################
-addgroup -g $GID $RUN_USER
-adduser -D -s /bin/sh -g $GID -G $RUN_USER -h "/home/$RUN_USER" -u $UID $RUN_USER
+
+getent group $RUN_USER || addgroup -g $GID $RUN_USER
+id -u $RUN_USER &>/dev/null || adduser -D -s /bin/sh -g $GID -G $RUN_USER -h "/home/$RUN_USER" -u $UID $RUN_USER
 
 ####################################
 #Fix mounted directory permissions #
